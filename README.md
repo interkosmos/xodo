@@ -5,7 +5,7 @@ can be displayed in various units.
 Slightly updated to be compatible with modern compilers.
 
 ## Build
-Use the provided Makefile to build the source code:
+Use the provided Makefile to build the executable:
 ```
 $ make
 ```
@@ -23,5 +23,6 @@ $ make
 You have to use GCC, as imake doesn’t work well with Clang.
 
 ## Copyright
-Copyright (c) 1996, Stephen O. Lidie and Lehigh University. Inspired by the
-Macintosh Mouse Odometer by Sean P. Nolan.
+Copyright © 1996, Stephen O. Lidie and Lehigh University.
+
+Inspired by the Macintosh Mouse Odometer by Sean P. Nolan.
