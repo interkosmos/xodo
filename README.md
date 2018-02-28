@@ -23,6 +23,6 @@ $ make
 You have to use GCC, as imake doesn’t work well with Clang.
 
 ## Copyright
-Copyright © 1996, Stephen O. Lidie and Lehigh University.
+Copyright © 1990 – 1996, Stephen O. Lidie and Lehigh University.
 
 Inspired by the Macintosh Mouse Odometer by Sean P. Nolan.
