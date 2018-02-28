@@ -1,0 +1,20 @@
+PDT (/usr/local/bin/xodomm.a/xodo.mm) xodometer, xodo
+  display, d: string = DISPLAY, ""
+  display_width_millimeters, dwm: integer = D_XODO_DWM, 350
+  display_height_millimeters, dhm: integer = D_XODO_DHM, 274
+  display_width_pixels, dwp: integer = D_XODO_DWP, 1280
+  display_height_pixels, dhp: integer = D_XODO_DHP, 1024
+  pointer_scale_factor, psf: real = D_XODO_PSF, 3.4
+  border, bd: name = Black
+  background, bg: name = White
+  foreground, fg: name = Black
+  fontname, fn: string = "9x15"
+  fontname2, fn2: string = "6x10"
+  geometry, g: string = "<width>x<height>{+-}<xoffset>{+-}<yoffset>"
+  iconic, i: switch
+  microsecond_interval_time, mit: integer = 100000
+  odometer, o: key cursor, pointer, both, keyend = both
+  odometer_file, of: file = $HOME/.xodo
+  odometer_autosave_time, oat: integer = 2
+  title, t: string = "xodo"
+PDTEND no_file_list

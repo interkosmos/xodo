@@ -1,0 +1,293 @@
+/*
+PDT (/usr/local/bin/xodomm.a/xodo.mm) xodometer, xodo
+  display, d: string = DISPLAY, ""
+  display_width_millimeters, dwm: integer = D_XODO_DWM, 350
+  display_height_millimeters, dhm: integer = D_XODO_DHM, 274
+  display_width_pixels, dwp: integer = D_XODO_DWP, 1280
+  display_height_pixels, dhp: integer = D_XODO_DHP, 1024
+  pointer_scale_factor, psf: real = D_XODO_PSF, 3.4
+  border, bd: name = Black
+  background, bg: name = White
+  foreground, fg: name = Black
+  fontname, fn: string = "9x15"
+  fontname2, fn2: string = "6x10"
+  geometry, g: string = "<width>x<height>{+-}<xoffset>{+-}<yoffset>"
+  iconic, i: switch
+  microsecond_interval_time, mit: integer = 100000
+  odometer, o: key cursor, pointer, both, keyend = both
+  odometer_file, of: file = $HOME/.xodo
+  odometer_autosave_time, oat: integer = 2
+  title, t: string = "xodo"
+PDTEND no_file_list
+*/
+
+/*
+Define P_EVAP_EXTERN in separately compiled modules!
+This will declare pvt as an external so you can reference
+parameter values.  No storage is allocated in this case.
+*/
+#ifndef P_EVAP_EXTERN
+
+struct pdt_header pdt = {
+  "PDT Version 2.0 for U*X",
+  "/usr/local/bin/xodomm.a/xodo.mm",
+  "no_file_list"
+};
+
+evap_Parameter_Value pvt[] = {
+
+  {"help", "h",
+   FALSE, TRUE, P_TYPE_SWITCH,
+   NULL,
+   "FALSE",
+   ", usage_help, full_help: Display Command Information",
+   0,
+   NULL,
+   {NULL},
+  },  /* end of "display_command_information" PDT entry */
+
+  {"display", "d",
+   FALSE, TRUE, P_TYPE_STRING,
+   "DISPLAY",
+   "",
+   ": string = DISPLAY, \"\"",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "display" PDT entry */
+
+  {"display_width_millimeters", "dwm",
+   FALSE, TRUE, P_TYPE_INTEGER,
+   "D_XODO_DWM",
+   "350",
+   ": integer = D_XODO_DWM, 350",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "display_width_millimeters" PDT entry */
+
+  {"display_height_millimeters", "dhm",
+   FALSE, TRUE, P_TYPE_INTEGER,
+   "D_XODO_DHM",
+   "274",
+   ": integer = D_XODO_DHM, 274",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "display_height_millimeters" PDT entry */
+
+  {"display_width_pixels", "dwp",
+   FALSE, TRUE, P_TYPE_INTEGER,
+   "D_XODO_DWP",
+   "1280",
+   ": integer = D_XODO_DWP, 1280",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "display_width_pixels" PDT entry */
+
+  {"display_height_pixels", "dhp",
+   FALSE, TRUE, P_TYPE_INTEGER,
+   "D_XODO_DHP",
+   "1024",
+   ": integer = D_XODO_DHP, 1024",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "display_height_pixels" PDT entry */
+
+  {"pointer_scale_factor", "psf",
+   FALSE, TRUE, P_TYPE_REAL,
+   "D_XODO_PSF",
+   "3.4",
+   ": real = D_XODO_PSF, 3.4",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "pointer_scale_factor" PDT entry */
+
+  {"border", "bd",
+   FALSE, TRUE, P_TYPE_NAME,
+   NULL,
+   "Black",
+   ": name = Black",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "border" PDT entry */
+
+  {"background", "bg",
+   FALSE, TRUE, P_TYPE_NAME,
+   NULL,
+   "White",
+   ": name = White",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "background" PDT entry */
+
+  {"foreground", "fg",
+   FALSE, TRUE, P_TYPE_NAME,
+   NULL,
+   "Black",
+   ": name = Black",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "foreground" PDT entry */
+
+  {"fontname", "fn",
+   FALSE, TRUE, P_TYPE_STRING,
+   NULL,
+   "9x15",
+   ": string = \"9x15\"",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "fontname" PDT entry */
+
+  {"fontname2", "fn2",
+   FALSE, TRUE, P_TYPE_STRING,
+   NULL,
+   "6x10",
+   ": string = \"6x10\"",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "fontname2" PDT entry */
+
+  {"geometry", "g",
+   FALSE, TRUE, P_TYPE_STRING,
+   NULL,
+   "<width>x<height>{+-}<xoffset>{+-}<yoffset>",
+   ": string = \"<width>x<height>{+-}<xoffset>{+-}<yoffset>\"",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "geometry" PDT entry */
+
+  {"iconic", "i",
+   FALSE, TRUE, P_TYPE_SWITCH,
+   NULL,
+   "FALSE",
+   ": switch",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "iconic" PDT entry */
+
+  {"microsecond_interval_time", "mit",
+   FALSE, TRUE, P_TYPE_INTEGER,
+   NULL,
+   "100000",
+   ": integer = 100000",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "microsecond_interval_time" PDT entry */
+
+  {"odometer", "o",
+   FALSE, TRUE, P_TYPE_KEY,
+   NULL,
+   "both",
+   ": key cursor, pointer, both, keyend = both",
+   0,
+   NULL,
+   {
+    "cursor",
+    "pointer",
+    "both",
+    NULL,  /* end of keys */
+   },
+  },  /* end of "odometer" PDT entry */
+
+  {"odometer_file", "of",
+   FALSE, TRUE, P_TYPE_FILE,
+   NULL,
+   "$HOME/.xodo",
+   ": file = $HOME/.xodo",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "odometer_file" PDT entry */
+
+  {"odometer_autosave_time", "oat",
+   FALSE, TRUE, P_TYPE_INTEGER,
+   NULL,
+   "2",
+   ": integer = 2",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "odometer_autosave_time" PDT entry */
+
+  {"title", "t",
+   FALSE, TRUE, P_TYPE_STRING,
+   NULL,
+   "xodo",
+   ": string = \"xodo\"",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "title" PDT entry */
+
+  {NULL},  /* end of all PDT entries */
+
+};
+#else
+extern evap_Parameter_Value pvt[];
+#endif
+
+#define P_display 1
+#define P_display_width_millimeters 2
+#define P_display_height_millimeters 3
+#define P_display_width_pixels 4
+#define P_display_height_pixels 5
+#define P_pointer_scale_factor 6
+#define P_border 7
+#define P_background 8
+#define P_foreground 9
+#define P_fontname 10
+#define P_fontname2 11
+#define P_geometry 12
+#define P_iconic 13
+#define P_microsecond_interval_time 14
+#define P_odometer 15
+#define P_odometer_file 16
+#define P_odometer_autosave_time 17
+#define P_title 18
+#define P_NUMBER_OF_PARAMETERS 19

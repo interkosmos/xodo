@@ -1,0 +1,68 @@
+/*
+PDT (./libevapmm.a/disac.mm) disac
+  display_option, do: key brief, full, keyend = brief
+  output, o: file = stdout
+PDTEND no_file_list
+*/
+
+/*
+Define P_EVAP_EXTERN in separately compiled modules!
+This will declare pvt as an external so you can reference
+parameter values.  No storage is allocated in this case.
+*/
+#ifndef P_EVAP_EXTERN
+
+struct pdt_header disac_pkg_pdt = {
+  "PDT Version 2.0 for U*X",
+  "./libevapmm.a/disac.mm",
+  "no_file_list"
+};
+
+evap_Parameter_Value disac_pkg_pvt[] = {
+
+  {"help", "h",
+   FALSE, TRUE, P_TYPE_SWITCH,
+   NULL,
+   "FALSE",
+   ", usage_help, full_help: Display Command Information",
+   0,
+   NULL,
+   {NULL},
+  },  /* end of "display_command_information" PDT entry */
+
+  {"display_option", "do",
+   FALSE, TRUE, P_TYPE_KEY,
+   NULL,
+   "brief",
+   ": key brief, full, keyend = brief",
+   0,
+   NULL,
+   {
+    "brief",
+    "full",
+    NULL,  /* end of keys */
+   },
+  },  /* end of "display_option" PDT entry */
+
+  {"output", "o",
+   FALSE, TRUE, P_TYPE_FILE,
+   NULL,
+   "stdout",
+   ": file = stdout",
+   0,
+   NULL,
+   {
+    NULL,  /* end of keys */
+   },
+  },  /* end of "output" PDT entry */
+
+  {NULL},  /* end of all PDT entries */
+
+};
+#else
+extern evap_Parameter_Value disac_pkg_pvt[];
+#endif
+
+#define disac_pkg_P_display_option 1
+#define disac_pkg_P_output 2
+#define disac_pkg_P_NUMBER_OF_PARAMETERS 3

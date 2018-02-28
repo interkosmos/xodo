@@ -1,0 +1,38 @@
+/*
+PDT (./libevapmm.a/bang.mm) !
+PDTEND optional_file_list
+*/
+
+/*
+Define P_EVAP_EXTERN in separately compiled modules!
+This will declare pvt as an external so you can reference
+parameter values.  No storage is allocated in this case.
+*/
+#ifndef P_EVAP_EXTERN
+
+struct pdt_header bang_pkg_pdt = {
+  "PDT Version 2.0 for U*X",
+  "./libevapmm.a/bang.mm",
+  "optional_file_list"
+};
+
+evap_Parameter_Value bang_pkg_pvt[] = {
+
+  {"help", "h",
+   FALSE, TRUE, P_TYPE_SWITCH,
+   NULL,
+   "FALSE",
+   ", usage_help, full_help: Display Command Information",
+   0,
+   NULL,
+   {NULL},
+  },  /* end of "display_command_information" PDT entry */
+
+  {NULL},  /* end of all PDT entries */
+
+};
+#else
+extern evap_Parameter_Value bang_pkg_pvt[];
+#endif
+
+#define bang_pkg_P_NUMBER_OF_PARAMETERS 1

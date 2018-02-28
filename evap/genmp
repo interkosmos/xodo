@@ -1,0 +1,135 @@
+#!/usr/local/bin/perl
+#
+# generate_man_page list_of_commands
+#
+# Use the output from Display Command Information to create a
+# man page template. Output written on list_of_commands.1.
+#
+# SOL, LUCC.  92/12/11
+# SOL, LUCC.  93/03/05.  Fix for public distribution with xodmeter.
+#	Thanks to Larry W. Virden and Ti Kan.
+# SOL, LUCC.  93/04/10.  Modify for Evaluate Parameters.
+# SOL, LUCC.  93/05/19.  Modify for Perl version of evap.
+# SOL, LUCC.  93/08/23.  Update for Evaluate Parameters version 2.0.
+# SOL, LUCC.  94/04/05.  Add -author and -see_also parameters.
+# SOL, LUCC.  95/10/30.  Fix leading blank/tab bug.
+#
+# Copyright (C) 1992 - 1995.  Stephen O. Lidie and Lehigh University.
+#
+
+
+use Getopt::EvaP;		# Evaluate Parameters
+
+$PDT = <<'end_of_PDT';
+  commands, c: list of file = $required
+  author, a: list of string = $required
+  see_also, sa: list of string = ''
+  output_path, op: file = man
+  no_file_list
+end_of_PDT
+
+$MM = <<'end_of_MM';
+generate_man_page, genmp
+
+        Use the output from Evaluate Parameters to create
+        a man page.  Output is written to a file name
+        created by concatenating:
+
+          `output_path/' . `name of the command' . `1'
+
+          Example:
+
+            genmp -c genmp -a 'S. O. Lidie'
+
+              This example generates genmp's man page.
+              Output is written to file `man/genmp.1'.
+.commands
+	Specifies the name of the command(s), each of
+	which MUST use Evaluate Parameters as its user
+	interface.
+.author
+	Specifies the author of the software.
+.see_also
+	Optionally specifies a list of `See Also'
+	references.
+.output_path
+	Specifies the path name of the directory to hold
+	the generated man pages.  Default is `man'.      
+end_of_MM
+
+@PDT = split( /\n/, $PDT );
+@MM = split( /\n/, $MM );
+EvaP \@PDT, \@MM;		# evaluate paramters
+
+while ( ($command = shift( @{$Options{'commands'}} )) ) {
+    @path_elements = split /\//, $command;
+    $basename = $path_elements[$#path_elements];
+
+    open( U, "$command -usage_help |" ) or die("Cannot exec $command");
+    @u = <U>;
+    close U;
+    @u = grep s/Usage: //, @u;
+    @tokens = split ' ', $u[0];
+    $u[0] = $basename . ' ' . join ' ', @tokens[1 .. $#tokens];
+
+    open D, "$command -full_help |";
+
+    $_ = <D>;			# skip command source
+    $_ = <D>;
+    $_ = <D>;			# skip message module name
+
+    open(M, ">$Options{'output_path'}/$basename.1") or
+        die "Cannot open output file";
+
+    while (<D>) {		# skip leading blank lines
+	last if $_ ne "\n";
+    }
+    chop($command = $_);
+    @commands = split /,/, $command;
+    $command = $commands[$#commands];
+    chop($date = `date`);
+    $date = substr($date, 4, 6) . ', ' . substr($date, 24, 4);
+
+    print M ".TH \"$command\" 1 \"$date\"\n";
+    print M ".SH NAME\n";
+    print M join( ', ', @commands), "\n";
+    print M ".SH SYNOPSIS\n";
+    print M $u[0], "\n";
+    print M ".SH DESCRIPTION\n";
+    while (<D>) {
+	s/^\t/        /;
+	last if /^Parameters/;
+	if (length($_) < 8) {
+	    print M "\n";
+	} else {
+	    print M substr($_, 8);
+	}
+    }
+    $_ = <D>;			# skip one blank line
+    print M ".SH OPTIONS\n";
+    while (<D>) {
+	s/^\t//;
+	s/^        //;
+	if ( /^-/ ) {
+	    print M "\n$_\n";
+	} else {
+	    print M "  $_";  
+	}
+
+    }
+    print M "\n.SH AUTHOR\n";
+    foreach $a (@{$Options{'author'}}) {
+        print M "$a\n";
+    }
+    if (defined(@{$Options{'see_also'}}) and @{$Options{'see_also'}} ne '') {
+        print M "\n.SH SEE ALSO\n";
+        print M ".nf\n";
+        foreach $sa (@{$Options{'see_also'}}) {
+            print M ".BR $sa\n";
+        }
+    }
+
+    close M;
+    close D;
+
+} # whilend

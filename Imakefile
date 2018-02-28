@@ -1,0 +1,75 @@
+#
+# Imakefile for xodometer.
+#
+# Stephen O. Lidie, Lehigh University Computing Center, 93/02/11.
+#
+# lusol@Lehigh.EDU
+#
+# Prior to running xmkmf inspect/change the following variables:
+#
+#   BINDIR          binary directoy
+#   MANDIR          man page directory
+#   RANLIB          what is ranlib (sorry, not defined in AIX)
+#   PERLDIR         path name of Perl (it's OK if you don't have Perl!)
+#   CDEBUGFLAGS     cc compiler options
+#   MATHLIB         name of math library
+#   LOCAL_LIBRARIES which libraries
+#
+# Then:  xmkmf; make; make install
+#
+
+#
+# Where you want things installed.
+#
+BINDIR = /usr/local/bin
+MANDIR = /usr/local/man/man1
+
+#
+# Whether or not you have/need ranlib.
+#
+RANLIB = ranlib    # have or need ranlib
+#RANLIB = /bin/true # do not have or need ranlib
+
+#
+# Where to get Perl.  It's OK if you don't have Perl, but expect an error
+# from the program genmp during a 'make install' - the error can be safely
+# ignored.  I use genmp (generate_man_page) so that the xodometer man page
+# is always up-to-date, but the one that you have received in this
+# distribution is by definition the latest and greatest.
+#
+PERLDIR         = /usr/local/bin
+
+CDEBUGFLAGS     = -O
+MATHLIB         = -lm
+LOCAL_LIBRARIES = $(XLIB) $(MATHLIB)
+
+SRCS            = xodo.c evap/evap.c
+OBJS            = xodo.o evap/evap.o
+
+all:: xodo
+#all:: xodo_a xodo
+
+clean::
+	rm xodo xodo.o xodomm.a evap/evap.o
+
+evap/evap.o: evap/evap.c evap/evap.h
+	(cd evap; $(CC) $(CDEBUGFLAGS) -DP_EVAP_MM_PATH=\"$(BINDIR)\" -c evap.c)
+
+xodo:
+	$(CC) -traditional-cpp -o xodo xodo.c
+
+xodo_a:
+	ar rcv xodomm.a evap\/xodo.mm
+	$(RANLIB) xodomm.a
+	sed -e "s!/usr/local/bin!$(BINDIR)!g" evap/xodo_pdt.skl > evap/xodo_pdt.out
+
+install::
+	$(INSTALL) -c $(INSTPGMFLAGS) xodo     $(BINDIR)
+#	$(INSTALL) -c $(INSTPGMFLAGS) xodomm.a $(BINDIR)
+# Above fails under Linux, so just copy manually.
+#	cp  xodomm.a $(BINDIR)
+#	ranlib $(BINDIR)/xodomm.a
+#	chmod 755 $(BINDIR)/xodomm.a
+	$(INSTALL) -c $(INSTMANFLAGS) xodo.man $(MANDIR)/xodo.1
+
+ComplexProgramTarget(xodo)

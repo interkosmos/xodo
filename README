@@ -1,0 +1,74 @@
+
+
+                             xodometer 1.2
+
+As my first X application I present xodometer, which tracks the total distance
+your cursor and pointing device (typically a mouse) travel.  It also maintains
+"trip" distance since the application started or since you clicked on a trip
+reset button.
+
+A pull-down menu allows you to select in which units the distance is
+displayed, from millimeters to nautical miles to light-nanoseconds, and more.
+
+xodometer requires a one-time calibration procedure which is fully described
+by reading the man page or by entering "xodo -full_help".
+
+xodometer was inspired by the Macintosh Mouse Odometer program written by
+Sean P. Nolan, while xneko by Masayuki Koba provided my initial insights into
+writing X programs.
+
+An IBM RS/6000 model 320 running AIX 3.2.3 with mwm and X11 Release 4 was the
+primary developement environment, although some small amount of testing was
+done on a Sun SPARC 1+ running SunOS 4.1.1 with twm, and a Pentium 100 running
+Linux 1.2.13 with fvwm.  Please report any bugs and be sure to fully specify
+your configuration.
+
+Although in theory the cursor distance can be reliably tracked, the actual
+distance your pointing device moves is only APPROXIMATED and will not be very
+exact, so don't report this as a bug :-)!
+
+Again, remember that this was done as an exercise to learn Xlib programming;
+use xodometer without warranty!  It took me thirty days to write, which
+seems like a long time, but maybe not too bad considering the learning curve
+and the fact that I'm over forty.... (-:
+
+
+                            Installation
+
+The xodometer tar file is available via anonymous FTP from FTP.Lehigh.EDU in
+the directory pub/odometers.  After modifying the Imakefile variables as
+required generate your Makefile from the Imakefile in the standard manner,
+usually `xmkmf'.  Then run "make" followed by "make install".  A sample
+Makefile has been provided for your pleasure.
+
+I welcome comments, enhancements, and bug reports.  Take care.
+
+
+Stephen O. Lidie
+Lehigh University Computing Center
+
+lusol@Lehigh.EDU
+
+
+                        Revision History
+
+lusol@Lehigh.EDU, LUCC, 93/02/23.
+ . Original version 1.0 release.
+
+lusol@Lehigh.EDU, LUCC, 93/03/05
+ . Version 1.1 release.  Display absolute screen coordinates of the
+   cursor to assist in calibrating xodometer.  Use select rather than
+   setitimer and signals for the microsecond timing requirements.
+ . Various bug fixes/observations by Larry W. Virden (lwv26@cas.org).
+ . More valuable bug fixes/observations by Ti Kan (ti@bazooka.amb.org).
+   Ti also tested xodometer on the following platforms:
+	USL UNIX SVR4.2.1 "Destiny" on a i486 PC
+	SCO UNIX SVR3.2.2 on a i486 PC
+	Altos UNIX SVR3.2 2.1bC0 on a i486 PC
+	SunOS 4.1.2 on a Sun Sparc IPX workstation
+	Stratus FTX SVR4 2.1 on a Stratus XA/R fault-tolerant server
+   Many thanks!
+
+lusol@Lehigh.EDU, LUCC, 96/01/06.
+ . Minor fix to work with segmented machines and read-only strings.  Add the
+   latest version of Evaluate Parameters and update the man page and Imakefile.
