@@ -1,0 +1,20 @@
+name: CI
+
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '30 5 15 * *'
+
+
+jobs:
+  ci:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build
+      run: npx --package mini-cross@0.15.2 mc --no-tty _ make
+

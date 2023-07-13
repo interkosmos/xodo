@@ -1,0 +1,7 @@
+---
+base: ubuntu:22.04
+install:
+ - gcc
+ - libx11-dev
+ - make
+---
