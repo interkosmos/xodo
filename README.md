@@ -11,8 +11,8 @@ $ make
 ```
 Or run your favourite C compiler directly:
 ```
-$ gcc8 -DP_EVAP_MM_PATH=\"/usr/local/bin\" -c evap/evap.c
-$ gcc8 -I/usr/local/include -L/usr/local/lib -o xodo xodo.c evap.o -lX11 -lm
+$ gcc -DP_EVAP_MM_PATH=\"/usr/local/bin\" -c evap/evap.c
+$ gcc -I/usr/local/include -L/usr/local/lib -o xodo xodo.c evap.o -lX11 -lm
 ```
 Or use imake:
 ```

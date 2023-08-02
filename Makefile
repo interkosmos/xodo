@@ -1,4 +1,4 @@
-CC           = gcc8
+CC           = gcc
 LDFLAGS      = -I/usr/local/include -L/usr/local/lib
 LIBS         = -lX11 -lm
 EVAP_MM_PATH = /usr/local/bin
